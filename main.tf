@@ -272,21 +272,14 @@ resource "github_repository_ruleset" "default" {
 # Access
 ################################################################################
 
-# Add data resource to look up the team ID. Team names must be unique in an organization so using
-# them as an input is safe.
-data "github_team" "default" {
-  for_each = var.access
-
-  slug = each.key
-}
-
 resource "github_team_repository" "default" {
   for_each = var.access
 
   # Built-in roles are case-insensitive, custom repository role names are passed as-is.
   permission = contains(["admin", "maintain", "pull", "push", "triage"], lower(each.value)) ? lower(each.value) : each.value
   repository = github_repository.default.name
-  team_id    = data.github_team.default[each.key].id
+  # The slug keeps team_id known at plan time; a data source lookup is deferred by a caller's depends_on.
+  team_id = each.key
 }
 
 ################################################################################

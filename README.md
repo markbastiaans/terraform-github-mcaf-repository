@@ -174,7 +174,7 @@ module "mcaf-repository" {
 ```
 
 > [!IMPORTANT]
-> If you're creating a GitHub team in the same run/workspace that assigns permissions to the repository, you must set an explicit dependency to ensure the team is created before repository:
+> If you're creating a GitHub team in the same run/workspace that assigns permissions to the repository, you must set an explicit dependency to ensure the team is created before the repository grant. The dependency only orders creation; a change to an unrelated team does not replace the other grants:
 >
 > ```hcl
 > resource "github_team" "myteam" {
@@ -302,7 +302,6 @@ module "mcaf-repository" {
 | [github_repository_vulnerability_alerts.default](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_vulnerability_alerts) | resource |
 | [github_team_repository.default](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
 | [github_workflow_repository_permissions.default](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/workflow_repository_permissions) | resource |
-| [github_team.default](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team) | data source |
 
 ## Inputs
 

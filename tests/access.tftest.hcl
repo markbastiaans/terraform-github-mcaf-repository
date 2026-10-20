@@ -17,18 +17,16 @@ run "access_built_in_role" {
     source = "./"
   }
 
-  override_data {
-    target = data.github_team.default
-    values = {
-      id = "123"
-    }
-  }
-
   command = plan
 
   assert {
     condition     = resource.github_team_repository.default["MyTeam"].permission == "maintain"
     error_message = "Built-in role should be passed in lowercase"
+  }
+
+  assert {
+    condition     = resource.github_team_repository.default["MyTeam"].team_id == "MyTeam"
+    error_message = "The team slug should be passed as team_id"
   }
 }
 
@@ -43,13 +41,6 @@ run "access_custom_role" {
 
   module {
     source = "./"
-  }
-
-  override_data {
-    target = data.github_team.default
-    values = {
-      id = "123"
-    }
   }
 
   command = plan
