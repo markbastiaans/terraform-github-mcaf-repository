@@ -278,8 +278,7 @@ resource "github_team_repository" "default" {
   # Built-in roles are case-insensitive, custom repository role names are passed as-is.
   permission = contains(["admin", "maintain", "pull", "push", "triage"], lower(each.value)) ? lower(each.value) : each.value
   repository = github_repository.default.name
-  # The slug keeps team_id known at plan time; a data source lookup is deferred by a caller's depends_on.
-  team_id = each.key
+  team_id    = each.key
 }
 
 ################################################################################
